@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <meta name="theme-color" content="#090D16">
     <title>Kirtipur Hub Nepal | Premier Tech & Gadgets Store</title>
     <meta name="description" content="Kirtipur Hub Nepal - Your destination for genuine power banks, TWS earbuds, smartwatches, fast chargers & tech gadgets in Nepal. Fast delivery & WhatsApp ordering.">
     <!-- Google Fonts -->
@@ -11,7 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css?v=2">
+    <link rel="stylesheet" href="style.css?v=11">
 </head>
 <body>
 
@@ -31,11 +32,7 @@
     <header class="header" id="header">
         <div class="container header-container">
             <a href="#" class="brand-logo">
-                <img src="images/logo.jpg?v=2" alt="Kirtipur Hub Nepal Logo" class="header-logo-img">
-                <div class="logo-text">
-                    <span class="brand-name">Kirtipur Hub <span class="highlight">Nepal</span></span>
-                    <span class="brand-slogan">Quality Products, Nepal's Pride</span>
-                </div>
+                <span class="brand-name">Kirtipur Hub <span class="highlight">Nepal</span></span>
             </a>
 
             <!-- Search Bar -->
@@ -93,7 +90,7 @@
                 <div class="spotlight-card" onclick="openProductModal('mypower-super35c')">
                     <span class="spotlight-tag">BESTSELLER</span>
                     <div class="spotlight-img-box">
-                        <img src="images/mypower_super35c.jpg?v=2" alt="MY POWER Super35C 20000mAh PowerBank" id="heroSpotlightImg1">
+                        <img src="images/mypower_super35c.jpg" alt="MY POWER Super35C 20000mAh PowerBank" id="heroSpotlightImg1">
                     </div>
                     <div class="spotlight-info">
                         <h3>MY POWER Super35C 20000mAh</h3>
@@ -109,7 +106,7 @@
                 <div class="spotlight-card" onclick="openProductModal('ultima-tws-earbuds')">
                     <span class="spotlight-tag badge-cyan">HOT DEAL</span>
                     <div class="spotlight-img-box">
-                        <img src="images/ultima_earbuds.jpg?v=2" alt="Ultima Wireless Earbuds" id="heroSpotlightImg2">
+                        <img src="images/ultima_earbuds.jpg" alt="Ultima Wireless Earbuds" id="heroSpotlightImg2">
                     </div>
                     <div class="spotlight-info">
                         <h3>Ultima Wireless ANC Earbuds</h3>
@@ -159,12 +156,53 @@
         </div>
     </section>
 
+    <!-- Quick Category Cards Section -->
+    <section class="category-cards-section">
+        <div class="container">
+            <div class="category-cards-header">
+                <h3 class="category-section-heading"><i class="fa-solid fa-sliders text-gold"></i> Shop By Category</h3>
+                <p class="category-section-sub">Tap any category below to view matching items instantly</p>
+            </div>
+            <div class="category-cards-grid">
+                <div class="cat-card" data-cat="powerbanks" onclick="filterByCategory('powerbanks')">
+                    <div class="cat-icon-box"><i class="fa-solid fa-battery-charging"></i></div>
+                    <h4>Power Banks</h4>
+                    <span class="cat-sub">MY POWER & MagSafe</span>
+                </div>
+                <div class="cat-card" data-cat="audio" onclick="filterByCategory('audio')">
+                    <div class="cat-icon-box"><i class="fa-solid fa-headphones"></i></div>
+                    <h4>Audio & Earbuds</h4>
+                    <span class="cat-sub">Ultima TWS & Speakers</span>
+                </div>
+                <div class="cat-card" data-cat="wearables" onclick="filterByCategory('wearables')">
+                    <div class="cat-icon-box"><i class="fa-solid fa-stopwatch"></i></div>
+                    <h4>Smartwatches</h4>
+                    <span class="cat-sub">AMOLED & Fitness</span>
+                </div>
+                <div class="cat-card" data-cat="chargers" onclick="filterByCategory('chargers')">
+                    <div class="cat-icon-box"><i class="fa-solid fa-plug"></i></div>
+                    <h4>Chargers & Cables</h4>
+                    <span class="cat-sub">65W GaN & PD Cables</span>
+                </div>
+                <div class="cat-card" data-cat="gaming" onclick="filterByCategory('gaming')">
+                    <div class="cat-icon-box"><i class="fa-solid fa-gamepad"></i></div>
+                    <h4>Gaming Gear</h4>
+                    <span class="cat-sub">RGB Headphones</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Main Products Section -->
     <main class="container products-section" id="productsSection">
         <div class="section-header">
             <div>
-                <h2 class="section-title">Explore Tech Gadgets</h2>
-                <p class="section-subtitle">Click any item for full specs, single product view & instant WhatsApp order</p>
+                <h2 class="section-title" id="sectionTitle">Explore Tech Gadgets</h2>
+                <p class="section-subtitle" id="sectionSubtitle">Click any item for full specs, single product view & instant WhatsApp order</p>
+                <div class="active-filter-bar" id="activeFilterBar" style="display:none;">
+                    <span class="active-filter-tag" id="activeFilterTag"><i class="fa-solid fa-filter"></i> Category: Power Banks</span>
+                    <button class="clear-filter-btn" onclick="resetFilters()"><i class="fa-solid fa-xmark"></i> View All Gadgets</button>
+                </div>
             </div>
             <div class="results-count" id="resultsCount">Showing 8 Gadgets</div>
         </div>
@@ -177,9 +215,9 @@
         <!-- No Results state -->
         <div class="no-results" id="noResults" style="display:none;">
             <i class="fa-solid fa-box-open"></i>
-            <h3>No gadgets found</h3>
-            <p>Try searching with another keyword or change category filter.</p>
-            <button class="btn btn-outline" onclick="resetFilters()">Reset Search</button>
+            <h3>No gadgets found in this category</h3>
+            <p>Try selecting another category or resetting search filters.</p>
+            <button class="btn btn-outline" onclick="resetFilters()">Reset All Filters</button>
         </div>
     </main>
 
@@ -283,8 +321,16 @@
                         <span class="summary-val" id="cartSubtotal">Rs. 0</span>
                     </div>
                     <div class="summary-row">
+                        <span>Delivery Zone</span>
+                        <select id="cartDeliveryZone" class="delivery-zone-select" onchange="updateCartTotals()">
+                            <option value="kirtipur">Kirtipur Area — FREE</option>
+                            <option value="valley">Inside Kathmandu Valley — Rs. 100</option>
+                            <option value="outside">Outside Valley (Nepal) — Rs. 200</option>
+                        </select>
+                    </div>
+                    <div class="summary-row">
                         <span>Delivery Charge</span>
-                        <span class="summary-val text-success">FREE (Valley)</span>
+                        <span class="summary-val" id="cartDeliveryCharge">FREE</span>
                     </div>
                     <div class="summary-row total-row">
                         <span>Grand Total</span>
@@ -330,11 +376,23 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="custPayment"><i class="fa-solid fa-wallet"></i> Preferred Payment Method</label>
+                    <label for="checkoutDeliveryZone"><i class="fa-solid fa-truck"></i> Delivery Zone *</label>
+                    <select id="checkoutDeliveryZone" onchange="updateCheckoutSummary()">
+                        <option value="kirtipur">Kirtipur Area — FREE Delivery</option>
+                        <option value="valley">Inside Kathmandu Valley — Rs. 100</option>
+                        <option value="outside">Outside Valley (Nepal) — Rs. 200</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="custPayment"><i class="fa-solid fa-wallet"></i> Payment Method *</label>
                     <select id="custPayment">
-                        <option value="Cash on Delivery">Cash on Delivery (COD)</option>
-                        <option value="eSewa / Khalti Transfer">eSewa / Khalti Mobile Transfer</option>
-                        <option value="Bank Direct Transfer">Bank Direct Transfer</option>
+                        <option value="Cash on Delivery (COD)">💵 Cash on Delivery (COD)</option>
+                        <option value="eSewa">📱 eSewa</option>
+                        <option value="Khalti">📱 Khalti</option>
+                        <option value="IME Pay">📱 IME Pay</option>
+                        <option value="ConnectIPS / Bank Transfer">🏦 ConnectIPS / Bank Transfer</option>
+                        <option value="FonePay">📱 FonePay</option>
                     </select>
                 </div>
 
@@ -349,6 +407,35 @@
         </div>
     </div>
 
+    <!-- PAYMENT & DELIVERY INFO SECTION -->
+    <section class="info-section" id="paymentDeliveryInfo">
+        <div class="container">
+            <h2 class="section-heading"><i class="fa-solid fa-shield-halved"></i> Payment & Delivery</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon" style="background: linear-gradient(135deg, #25D366, #128C7E);"><i class="fa-solid fa-money-bill-wave"></i></div>
+                    <h3>Cash on Delivery</h3>
+                    <p>Pay when you receive your product at your doorstep. No advance payment needed.</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon" style="background: linear-gradient(135deg, #60BB46, #3FAD3F);"><i class="fa-solid fa-mobile-screen"></i></div>
+                    <h3>eSewa / Khalti / IME Pay</h3>
+                    <p>Quick & easy mobile wallet payment. Send payment to our verified merchant account.</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon" style="background: linear-gradient(135deg, #2196F3, #1565C0);"><i class="fa-solid fa-building-columns"></i></div>
+                    <h3>Bank / ConnectIPS</h3>
+                    <p>Direct bank transfer or ConnectIPS for secure digital payment.</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon" style="background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));"><i class="fa-solid fa-truck-fast"></i></div>
+                    <h3>Delivery Charges</h3>
+                    <p><strong>Kirtipur Area:</strong> FREE<br><strong>Kathmandu Valley:</strong> Rs. 100<br><strong>Outside Valley:</strong> Rs. 200</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- FLOATING WHATSAPP BUTTON -->
     <a href="https://wa.me/9779749497724?text=Hello%20Kirtipur%20Hub%20Nepal!%20I%20have%20a%20question%20about%20a%20gadget." 
        target="_blank" 
@@ -358,16 +445,39 @@
         <span class="floating-tooltip">Chat with Kirtipur Hub<br><strong>9749497724</strong></span>
     </a>
 
+    <!-- MOBILE BOTTOM APP-LIKE NAVIGATION BAR -->
+    <div class="mobile-bottom-nav">
+        <a href="#productsSection" class="mobile-nav-item active" onclick="resetFilters()">
+            <i class="fa-solid fa-house"></i>
+            <span>Shop</span>
+        </a>
+        <button class="mobile-nav-item" onclick="focusMobileSearch()">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <span>Search</span>
+        </button>
+        <button class="mobile-nav-item" onclick="scrollToNavCategories()">
+            <i class="fa-solid fa-layer-group"></i>
+            <span>Categories</span>
+        </button>
+        <button class="mobile-nav-item" onclick="openCartDrawer()">
+            <div class="mobile-cart-icon-wrapper">
+                <i class="fa-solid fa-bag-shopping"></i>
+                <span class="cart-count mobile-cart-count" id="mobileCartCount">0</span>
+            </div>
+            <span>Cart</span>
+        </button>
+        <a href="https://wa.me/9779749497724?text=Hi%20Kirtipur%20Hub%20Nepal!%20I%20want%20to%20order%20gadgets." target="_blank" class="mobile-nav-item mobile-nav-wa">
+            <i class="fa-brands fa-whatsapp"></i>
+            <span>WhatsApp</span>
+        </a>
+    </div>
+
     <!-- FOOTER -->
     <footer class="footer">
         <div class="container footer-grid">
             <div class="footer-col brand-col">
                 <div class="brand-logo">
-                    <img src="images/logo.jpg?v=2" alt="Kirtipur Hub Nepal Logo" class="footer-logo-img">
-                    <div class="logo-text">
-                        <span class="brand-name">Kirtipur Hub <span class="highlight">Nepal</span></span>
-                        <span class="brand-slogan">Quality Products, Nepal's Pride</span>
-                    </div>
+                    <span class="brand-name">Kirtipur Hub <span class="highlight">Nepal</span></span>
                 </div>
                 <p class="footer-desc">Your ultimate destination for authentic tech gadgets, power banks, audio gear, and smart accessories in Kirtipur & Nepal.</p>
                 <div class="footer-contact">
@@ -423,6 +533,6 @@
     <!-- Toast Notification Container -->
     <div class="toast-container" id="toastContainer"></div>
 
-    <script src="app.js?v=2"></script>
+    <script src="app.js?v=11"></script>
 </body>
 </html>

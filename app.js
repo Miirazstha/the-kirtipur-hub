@@ -5,6 +5,64 @@
 
 const WHATSAPP_NUMBER = "9779749497724";
 
+// Delivery charge rates by zone
+const DELIVERY_CHARGES = {
+    kirtipur: { label: 'Kirtipur Area', charge: 0 },
+    valley:   { label: 'Inside Kathmandu Valley', charge: 100 },
+    outside:  { label: 'Outside Valley (Nepal)', charge: 200 }
+};
+
+function getDeliveryCharge(zone) {
+    return DELIVERY_CHARGES[zone] ? DELIVERY_CHARGES[zone].charge : 0;
+}
+
+function detectZoneFromAddress(address) {
+    const text = address.toLowerCase();
+    
+    // Keywords for Kirtipur (Free)
+    const kirtipurKeywords = [
+        'kirtipur', 'panga', 'chobhar', 'nayanbazar', 'nayabazar', 
+        'tyangla', 'bhatkyapati', 'palikhel', 'salyansthan', 'bagbazar kirtipur', 
+        'devdhoka', 'tahachal kirtipur', 'mulpani kirtipur'
+    ];
+    
+    // Keywords for Kathmandu Valley (Rs 100)
+    const valleyKeywords = [
+        'kathmandu', 'lalitpur', 'bhaktapur', 'patan', 'thimi', 
+        'balkhu', 'kalimati', 'koteshwor', 'baneshwor', 'chabahil', 
+        'ringroad', 'ring road', 'new road', 'newroad', 'thamel', 
+        'gongabu', 'balaju', 'maharajgunj', 'dhumbarahi', 'chabhil', 
+        'bouddha', 'jorpati', 'imadol', 'gwarko', 'satdobato', 'lagankhel',
+        'kupondole', 'pulchowk', 'jawalakhel', 'sanepa', 'dhobighat',
+        'kapan', 'budhanilkantha', 'tokha', 'swoyambhu', 'sitapaila',
+        'kalanki', 'sanobharyang', 'galkopakha', 'lazimpat', 'tripureshwor',
+        'teku', 'putalisadak', 'kamaladi', 'bagbazar', 'dillibazar', 'anamnagar',
+        'sinamangal', 'tinkune', 'peshkola', 'jadibuti', 'lokanthali', 'kaushaltar',
+        'gaththaghar', 'sallaghari', 'suryabinayak', 'kamalbinayak'
+    ];
+
+    // Check Kirtipur first
+    for (const kw of kirtipurKeywords) {
+        if (text.includes(kw)) {
+            return 'kirtipur';
+        }
+    }
+    
+    // Check Valley next
+    for (const kw of valleyKeywords) {
+        if (text.includes(kw)) {
+            return 'valley';
+        }
+    }
+    
+    // If not empty, default to outside valley
+    if (text.trim().length > 2) {
+        return 'outside';
+    }
+    
+    return null;
+}
+
 // ==========================================
 // 1. PRODUCTS DATABASE
 // ==========================================
@@ -19,7 +77,7 @@ const PRODUCTS = [
         badge: 'BESTSELLER',
         rating: 5.0,
         reviewsCount: 84,
-        image: 'images/mypower_super35c.jpg?v=2',
+        image: 'images/mypower_super35c.jpg',
         description: 'The MY POWER Super35C is a premium high-capacity 20,000mAh power bank equipped with 35W Super Fast Charging output. Designed with an integrated heavy-duty lanyard cable and a bright digital LED battery indicator, it can charge your phone, tablet, or handheld devices multiple times safely.',
         specs: [
             '20,000mAh High Capacity Li-Polymer Battery',
@@ -40,7 +98,7 @@ const PRODUCTS = [
         badge: 'HOT DEAL',
         rating: 4.9,
         reviewsCount: 62,
-        image: 'images/ultima_earbuds.jpg?v=2',
+        image: 'images/ultima_earbuds.jpg',
         description: 'Enjoy immersive high-fidelity sound with Ultima ANC Wireless Earbuds. Featuring 13mm dynamic titanium drivers for punchy deep bass, Quad-Mic Environmental Noise Cancellation (ENC) for crystal clear voice calls, and up to 40 hours of continuous music playback with fast charging case.',
         specs: [
             'Active Noise Cancellation (ANC) up to 30dB',
@@ -171,6 +229,44 @@ const PRODUCTS = [
             '1.5 Meter Length & 480Mbps Data Transfer Rate',
             'Tested for 15,000+ Bends Durability'
         ]
+    },
+    {
+        id: 'mypower-slim-10000',
+        title: 'MY POWER Slim 10000mAh 22.5W Fast Power Bank',
+        category: 'powerbanks',
+        categoryLabel: 'Power Bank',
+        price: 2199,
+        oldPrice: 2799,
+        badge: 'SLIM',
+        image: 'images/mypower_super35c.jpg',
+        description: 'Ultra-slim pocket-sized 10,000mAh power bank from MY POWER with 22.5W Super Fast Charging. Lightweight aluminum finish with dual output ports for fast daily charging.',
+        specs: [
+            '10,000mAh High Density Li-Polymer Battery',
+            '22.5W Quick Charge 3.0 & PD Fast Output',
+            'Ultra Slim 14mm Compact Profile',
+            'LED Battery Level Indicator Lights',
+            'Type-C & Micro USB Dual Input Support'
+        ]
+    },
+    {
+        id: 'ultima-pro-neckband',
+        title: 'Ultima Pro Wireless Bluetooth Neckband',
+        category: 'audio',
+        categoryLabel: 'Audio & Earbuds',
+        price: 1699,
+        oldPrice: 2299,
+        badge: 'LONG BATTERY',
+        rating: 4.7,
+        reviewsCount: 56,
+        image: 'images/ultima_earbuds.jpg',
+        description: 'Lightweight ergonomic magnetic neckband earphones featuring 30 hours of continuous music playback, deep bass drivers, and instant fast charging.',
+        specs: [
+            '30 Hours Continuous Music Playtime',
+            'Magnetic Lock Metal Earbuds',
+            '11mm Dynamic Extra Bass Drivers',
+            'IPX5 Sweat & Water Splash Proof',
+            'Type-C Fast Charging (10 min charge = 10 hrs music)'
+        ]
     }
 ];
 
@@ -213,10 +309,8 @@ function setupEventListeners() {
     const categoryBtns = document.querySelectorAll('.nav-link');
     categoryBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            categoryBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            currentFilter = btn.getAttribute('data-category');
-            renderProducts();
+            const cat = btn.getAttribute('data-category');
+            filterByCategory(cat);
         });
     });
 
@@ -266,6 +360,39 @@ function setupEventListeners() {
     document.getElementById('checkoutModal').addEventListener('click', (e) => {
         if (e.target.id === 'checkoutModal') closeCheckoutModal();
     });
+
+    // Auto-detect Delivery Zone from Location Address Text Input
+    const custAddressInput = document.getElementById('custAddress');
+    if (custAddressInput) {
+        custAddressInput.addEventListener('input', (e) => {
+            const detected = detectZoneFromAddress(e.target.value);
+            if (detected) {
+                const checkoutZone = document.getElementById('checkoutDeliveryZone');
+                const cartZone = document.getElementById('cartDeliveryZone');
+                
+                if (checkoutZone && checkoutZone.value !== detected) {
+                    checkoutZone.value = detected;
+                    updateCheckoutSummary();
+                }
+                if (cartZone && cartZone.value !== detected) {
+                    cartZone.value = detected;
+                    updateCartTotals();
+                }
+            }
+        });
+    }
+
+    // Sync Checkout Zone selection back to Cart Zone selection
+    const checkoutZoneSelect = document.getElementById('checkoutDeliveryZone');
+    if (checkoutZoneSelect) {
+        checkoutZoneSelect.addEventListener('change', (e) => {
+            const cartZone = document.getElementById('cartDeliveryZone');
+            if (cartZone && cartZone.value !== e.target.value) {
+                cartZone.value = e.target.value;
+                updateCartTotals();
+            }
+        });
+    }
 }
 
 // ==========================================
@@ -321,7 +448,7 @@ function renderProducts() {
                     <button class="btn btn-outline btn-sm" onclick="openProductModal('${p.id}')">
                         <i class="fa-solid fa-circle-info"></i> Specs
                     </button>
-                    <button class="btn btn-primary btn-sm" onclick="addToCart('${p.id}', 1)">
+                    <button class="btn btn-primary btn-sm" onclick="addToCart('${p.id}', 1); openCartDrawer();">
                         <i class="fa-solid fa-cart-plus"></i> Cart
                     </button>
                 </div>
@@ -330,8 +457,26 @@ function renderProducts() {
     `).join('');
 }
 
+const CATEGORY_NAMES = {
+    'all': { title: 'Explore Tech Gadgets', sub: 'Click any item for full specs, single product view & instant WhatsApp order', label: 'All Gadgets' },
+    'powerbanks': { title: 'Power Banks Collection', sub: 'High capacity MY POWER, MagSafe & fast charging power banks', label: 'Power Banks' },
+    'audio': { title: 'Audio & Wireless Earbuds Collection', sub: 'Studio quality Ultima TWS earbuds, neckbands & Bluetooth speakers', label: 'Audio & Earbuds' },
+    'wearables': { title: 'Smartwatches Collection', sub: 'AMOLED Bluetooth calling smartwatches & fitness bands', label: 'Smartwatches' },
+    'chargers': { title: 'Fast Chargers & Cables Collection', sub: '65W GaN III fast wall plugs & 100W PD braided cables', label: 'Chargers & Cables' },
+    'gaming': { title: 'Gaming Gear Collection', sub: 'RGB low-latency gaming headsets & surround audio', label: 'Gaming Gear' }
+};
+
 function filterByCategory(cat) {
     currentFilter = cat;
+    
+    // Reset search query when changing category for clean filtering
+    currentSearch = '';
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) searchInput.value = '';
+    const clearSearch = document.getElementById('clearSearch');
+    if (clearSearch) clearSearch.style.display = 'none';
+
+    // Highlight Navigation Bar Pills
     const categoryBtns = document.querySelectorAll('.nav-link');
     categoryBtns.forEach(btn => {
         if (btn.getAttribute('data-category') === cat) {
@@ -340,19 +485,68 @@ function filterByCategory(cat) {
             btn.classList.remove('active');
         }
     });
+
+    // Highlight Category Cards
+    const catCards = document.querySelectorAll('.cat-card');
+    catCards.forEach(card => {
+        if (card.getAttribute('data-cat') === cat) {
+            card.classList.add('active');
+        } else {
+            card.classList.remove('active');
+        }
+    });
+
+    // Update Titles & Active Filter Bar
+    const titleEl = document.getElementById('sectionTitle');
+    const subEl = document.getElementById('sectionSubtitle');
+    const filterBar = document.getElementById('activeFilterBar');
+    const filterTag = document.getElementById('activeFilterTag');
+
+    const catInfo = CATEGORY_NAMES[cat] || CATEGORY_NAMES['all'];
+    if (titleEl) titleEl.textContent = catInfo.title;
+    if (subEl) subEl.textContent = catInfo.sub;
+
+    if (cat !== 'all') {
+        if (filterBar) filterBar.style.display = 'flex';
+        if (filterTag) filterTag.innerHTML = `<i class="fa-solid fa-filter"></i> Category: <strong>${catInfo.label}</strong>`;
+    } else {
+        if (filterBar) filterBar.style.display = 'none';
+    }
+
     renderProducts();
+
+    // Smooth scroll down to products section so user immediately sees filtered results
+    const prodSection = document.getElementById('productsSection');
+    if (prodSection) {
+        prodSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
 }
 
 function resetFilters() {
     currentFilter = 'all';
     currentSearch = '';
-    document.getElementById('searchInput').value = '';
-    document.getElementById('clearSearch').style.display = 'none';
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) searchInput.value = '';
+    const clearSearch = document.getElementById('clearSearch');
+    if (clearSearch) clearSearch.style.display = 'none';
+
     const categoryBtns = document.querySelectorAll('.nav-link');
     categoryBtns.forEach(btn => {
         if (btn.getAttribute('data-category') === 'all') btn.classList.add('active');
         else btn.classList.remove('active');
     });
+
+    const catCards = document.querySelectorAll('.cat-card');
+    catCards.forEach(card => card.classList.remove('active'));
+
+    const filterBar = document.getElementById('activeFilterBar');
+    if (filterBar) filterBar.style.display = 'none';
+
+    const titleEl = document.getElementById('sectionTitle');
+    const subEl = document.getElementById('sectionSubtitle');
+    if (titleEl) titleEl.textContent = CATEGORY_NAMES['all'].title;
+    if (subEl) subEl.textContent = CATEGORY_NAMES['all'].sub;
+
     renderProducts();
 }
 
@@ -479,6 +673,23 @@ function updateCartBadge() {
     const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
     document.getElementById('cartCount').textContent = totalCount;
     document.getElementById('cartItemCount').textContent = totalCount;
+    const mobileCartBadge = document.getElementById('mobileCartCount');
+    if (mobileCartBadge) mobileCartBadge.textContent = totalCount;
+}
+
+function focusMobileSearch() {
+    const input = document.getElementById('searchInput');
+    if (input) {
+        input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        setTimeout(() => input.focus(), 300);
+    }
+}
+
+function scrollToNavCategories() {
+    const navBar = document.querySelector('.nav-bar');
+    if (navBar) {
+        navBar.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
 }
 
 function openCartDrawer() {
@@ -536,15 +747,48 @@ function renderCartItems() {
     }).join('');
 
     subtotalEl.textContent = `Rs. ${subtotal.toLocaleString()}`;
-    grandTotalEl.textContent = `Rs. ${subtotal.toLocaleString()}`;
+    updateCartTotals();
+}
+
+function updateCartTotals() {
+    const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const zoneSelect = document.getElementById('cartDeliveryZone');
+    const zone = zoneSelect ? zoneSelect.value : 'kirtipur';
+    const deliveryCharge = getDeliveryCharge(zone);
+    const grandTotal = subtotal + deliveryCharge;
+
+    const chargeEl = document.getElementById('cartDeliveryCharge');
+    if (chargeEl) {
+        chargeEl.textContent = deliveryCharge === 0 ? 'FREE' : `Rs. ${deliveryCharge.toLocaleString()}`;
+        chargeEl.className = deliveryCharge === 0 ? 'summary-val text-success' : 'summary-val';
+    }
+    const grandTotalEl = document.getElementById('cartGrandTotal');
+    if (grandTotalEl) grandTotalEl.textContent = `Rs. ${grandTotal.toLocaleString()}`;
 }
 
 // ==========================================
 // 7. CHECKOUT & WHATSAPP ORDER GENERATOR
 // ==========================================
 function openCheckoutModal() {
+    // Sync delivery zone from cart to checkout if available
+    const cartZone = document.getElementById('cartDeliveryZone');
+    const checkoutZone = document.getElementById('checkoutDeliveryZone');
+    if (cartZone && checkoutZone) checkoutZone.value = cartZone.value;
+
+    updateCheckoutSummary();
+
+    document.getElementById('checkoutModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function updateCheckoutSummary() {
     const summaryBox = document.getElementById('checkoutOrderSummary');
-    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const zoneSelect = document.getElementById('checkoutDeliveryZone');
+    const zone = zoneSelect ? zoneSelect.value : 'kirtipur';
+    const deliveryCharge = getDeliveryCharge(zone);
+    const deliveryLabel = DELIVERY_CHARGES[zone] ? DELIVERY_CHARGES[zone].label : 'Kirtipur Area';
+    const grandTotal = subtotal + deliveryCharge;
 
     summaryBox.innerHTML = `
         <div style="font-weight: 700; color: #FFF; margin-bottom: 8px;">Order Summary (${cart.length} item types):</div>
@@ -554,14 +798,21 @@ function openCheckoutModal() {
                 <strong style="color: var(--accent-cyan);">Rs. ${(i.price * i.quantity).toLocaleString()}</strong>
             </div>
         `).join('')}
-        <div style="border-top: 1px dashed var(--border-color); margin-top: 8px; padding-top: 8px; display: flex; justify-content: space-between; font-weight: 800; font-size: 0.95rem; color: #FFF;">
-            <span>Grand Total:</span>
-            <span style="color: var(--accent-cyan);">Rs. ${total.toLocaleString()}</span>
+        <div style="border-top: 1px dashed var(--border-color); margin-top: 8px; padding-top: 8px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 4px; color: var(--text-muted);">
+                <span>Subtotal:</span>
+                <span>Rs. ${subtotal.toLocaleString()}</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 4px; color: ${deliveryCharge === 0 ? '#25D366' : 'var(--accent-orange)'};">
+                <span>Delivery (${deliveryLabel}):</span>
+                <span>${deliveryCharge === 0 ? 'FREE' : 'Rs. ' + deliveryCharge.toLocaleString()}</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-weight: 800; font-size: 0.95rem; color: #FFF; margin-top: 6px; padding-top: 6px; border-top: 1px dashed var(--border-color);">
+                <span>Grand Total:</span>
+                <span style="color: var(--accent-cyan);">Rs. ${grandTotal.toLocaleString()}</span>
+            </div>
         </div>
     `;
-
-    document.getElementById('checkoutModal').classList.add('active');
-    document.body.style.overflow = 'hidden';
 }
 
 function closeCheckoutModal() {
@@ -574,6 +825,10 @@ function sendWhatsAppOrder() {
     const phone = document.getElementById('custPhone').value.trim();
     const address = document.getElementById('custAddress').value.trim();
     const payment = document.getElementById('custPayment').value;
+    const zoneSelect = document.getElementById('checkoutDeliveryZone');
+    const zone = zoneSelect ? zoneSelect.value : 'kirtipur';
+    const deliveryCharge = getDeliveryCharge(zone);
+    const deliveryLabel = DELIVERY_CHARGES[zone] ? DELIVERY_CHARGES[zone].label : 'Kirtipur Area';
 
     if (!name || !phone || !address) {
         showToast('Please fill all required fields!');
@@ -581,13 +836,15 @@ function sendWhatsAppOrder() {
     }
 
     let itemsText = "";
-    let grandTotal = 0;
+    let subtotal = 0;
 
     cart.forEach((item, index) => {
         const itemTotal = item.price * item.quantity;
-        grandTotal += itemTotal;
+        subtotal += itemTotal;
         itemsText += `${index + 1}. *${item.title}*\n   Qty: ${item.quantity} x Rs. ${item.price.toLocaleString()} = Rs. ${itemTotal.toLocaleString()}\n`;
     });
+
+    const grandTotal = subtotal + deliveryCharge;
 
     const msg = 
 `🛒 *NEW ORDER - KIRTIPUR HUB NEPAL*
@@ -595,13 +852,15 @@ function sendWhatsAppOrder() {
 👤 *Customer Name:* ${name}
 📞 *Phone Number:* ${phone}
 📍 *Delivery Address:* ${address}
-💳 *Payment Preference:* ${payment}
+💳 *Payment Method:* ${payment}
+🚚 *Delivery Zone:* ${deliveryLabel}
 
 📦 *ORDER ITEMS SUMMARY:*
 ${itemsText}
 ----------------------------------------
+💰 *Subtotal:* Rs. ${subtotal.toLocaleString()}
+🚚 *Delivery Charge:* ${deliveryCharge === 0 ? 'FREE' : 'Rs. ' + deliveryCharge.toLocaleString()}
 💰 *GRAND TOTAL:* Rs. ${grandTotal.toLocaleString()}
-🚚 *Delivery:* Free Valley Shipping
 
 Hi Kirtipur Hub Nepal! I have submitted this order from your website. Please confirm availability and delivery time. Thank you!`;
 
