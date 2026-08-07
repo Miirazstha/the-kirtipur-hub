@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kirtipur Hub Nepal | Premier Tech & Gadgets Store</title>
+    <meta name="description" content="Kirtipur Hub Nepal - Your destination for genuine power banks, TWS earbuds, smartwatches, fast chargers & tech gadgets in Nepal. Fast delivery & WhatsApp ordering.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css?v=2">
+</head>
+<body>
+
+    <!-- Top Announcement Bar -->
+    <div class="announcement-bar">
+        <div class="container announcement-content">
+            <span><i class="fa-solid fa-bolt text-accent"></i> Fast Delivery across Nepal & Kirtipur Valley | Cash On Delivery Available</span>
+            <div class="announcement-right">
+                <a href="https://wa.me/9779749497724" target="_blank" class="announcement-wa">
+                    <i class="fa-brands fa-whatsapp"></i> Quick Order: +977 9749497724
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Navigation Header -->
+    <header class="header" id="header">
+        <div class="container header-container">
+            <a href="#" class="brand-logo">
+                <img src="images/logo.jpg?v=2" alt="Kirtipur Hub Nepal Logo" class="header-logo-img">
+                <div class="logo-text">
+                    <span class="brand-name">Kirtipur Hub <span class="highlight">Nepal</span></span>
+                    <span class="brand-slogan">Quality Products, Nepal's Pride</span>
+                </div>
+            </a>
+
+            <!-- Search Bar -->
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" id="searchInput" placeholder="Search gadgets (Powerbank, Earbuds, Smartwatch)...">
+                <button class="clear-search" id="clearSearch" style="display:none;"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <!-- Header Actions -->
+            <div class="header-actions">
+                <a href="https://wa.me/9779749497724" target="_blank" class="header-wa-btn" title="Chat on WhatsApp">
+                    <i class="fa-brands fa-whatsapp"></i>
+                    <span class="wa-label">WhatsApp Us</span>
+                </a>
+
+                <button class="cart-btn" id="cartBtn" aria-label="View Cart">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <span class="cart-count" id="cartCount">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav class="nav-bar">
+        <div class="container nav-container">
+            <ul class="nav-links">
+                <li><button class="nav-link active" data-category="all"><i class="fa-solid fa-layer-group"></i> All Gadgets</button></li>
+                <li><button class="nav-link" data-category="powerbanks"><i class="fa-solid fa-battery-charging"></i> Power Banks</button></li>
+                <li><button class="nav-link" data-category="audio"><i class="fa-solid fa-headphones"></i> Audio & Earbuds</button></li>
+                <li><button class="nav-link" data-category="wearables"><i class="fa-solid fa-stopwatch"></i> Smartwatches</button></li>
+                <li><button class="nav-link" data-category="chargers"><i class="fa-solid fa-plug"></i> Chargers & Cables</button></li>
+                <li><button class="nav-link" data-category="gaming"><i class="fa-solid fa-gamepad"></i> Gaming Gear</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Banner Carousel -->
+    <section class="hero-section">
+        <div class="container hero-container">
+            <div class="hero-card">
+                <div class="hero-badge"><i class="fa-solid fa-fire"></i> Featured Nepal Top Sellers</div>
+                <h1 class="hero-title">High Performance Gadgets <br>For Everyday Life</h1>
+                <p class="hero-description">Discover 100% genuine tech, high-capacity power banks, crystal clear TWS earbuds, and smart accessories at best prices in Nepal. Instant delivery & direct WhatsApp order!</p>
+                <div class="hero-cta">
+                    <a href="#productsSection" class="btn btn-primary"><i class="fa-solid fa-cart-shopping"></i> Shop Now</a>
+                    <a href="https://wa.me/9779749497724?text=Hi%20Kirtipur%20Hub%20Nepal!%20I%20want%20to%20inquire%20about%20gadgets." target="_blank" class="btn btn-whatsapp">
+                        <i class="fa-brands fa-whatsapp"></i> Order via WhatsApp
+                    </a>
+                </div>
+            </div>
+            
+            <div class="hero-spotlight">
+                <div class="spotlight-card" onclick="openProductModal('mypower-super35c')">
+                    <span class="spotlight-tag">BESTSELLER</span>
+                    <div class="spotlight-img-box">
+                        <img src="images/mypower_super35c.jpg?v=2" alt="MY POWER Super35C 20000mAh PowerBank" id="heroSpotlightImg1">
+                    </div>
+                    <div class="spotlight-info">
+                        <h3>MY POWER Super35C 20000mAh</h3>
+                        <p class="spotlight-sub">35W Super Fast Power Bank with LED</p>
+                        <div class="spotlight-price">
+                            <span class="price-current">Rs. 3,499</span>
+                            <span class="price-old">Rs. 4,299</span>
+                        </div>
+                        <button class="btn btn-sm btn-outline"><i class="fa-solid fa-eye"></i> Quick View</button>
+                    </div>
+                </div>
+
+                <div class="spotlight-card" onclick="openProductModal('ultima-tws-earbuds')">
+                    <span class="spotlight-tag badge-cyan">HOT DEAL</span>
+                    <div class="spotlight-img-box">
+                        <img src="images/ultima_earbuds.jpg?v=2" alt="Ultima Wireless Earbuds" id="heroSpotlightImg2">
+                    </div>
+                    <div class="spotlight-info">
+                        <h3>Ultima Wireless ANC Earbuds</h3>
+                        <p class="spotlight-sub">Deep Bass & HD Mic TWS</p>
+                        <div class="spotlight-price">
+                            <span class="price-current">Rs. 2,499</span>
+                            <span class="price-old">Rs. 3,199</span>
+                        </div>
+                        <button class="btn btn-sm btn-outline"><i class="fa-solid fa-eye"></i> Quick View</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Badges -->
+    <section class="trust-section">
+        <div class="container trust-grid">
+            <div class="trust-item">
+                <div class="trust-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                <div class="trust-text">
+                    <h4>100% Original Products</h4>
+                    <p>Verified authentic gadgets with official warranty</p>
+                </div>
+            </div>
+            <div class="trust-item">
+                <div class="trust-icon"><i class="fa-solid fa-truck-fast"></i></div>
+                <div class="trust-text">
+                    <h4>Fast Nepal Delivery</h4>
+                    <p>Same day delivery in Kirtipur & Kathmandu Valley</p>
+                </div>
+            </div>
+            <div class="trust-item">
+                <div class="trust-icon"><i class="fa-brands fa-whatsapp"></i></div>
+                <div class="trust-text">
+                    <h4>Instant WhatsApp Order</h4>
+                    <p>No tedious forms! Order directly via WhatsApp</p>
+                </div>
+            </div>
+            <div class="trust-item">
+                <div class="trust-icon"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                <div class="trust-text">
+                    <h4>Cash on Delivery</h4>
+                    <p>Pay comfortably after receiving your order</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Products Section -->
+    <main class="container products-section" id="productsSection">
+        <div class="section-header">
+            <div>
+                <h2 class="section-title">Explore Tech Gadgets</h2>
+                <p class="section-subtitle">Click any item for full specs, single product view & instant WhatsApp order</p>
+            </div>
+            <div class="results-count" id="resultsCount">Showing 8 Gadgets</div>
+        </div>
+
+        <!-- Product Grid -->
+        <div class="product-grid" id="productGrid">
+            <!-- Dynamic JS injected cards -->
+        </div>
+
+        <!-- No Results state -->
+        <div class="no-results" id="noResults" style="display:none;">
+            <i class="fa-solid fa-box-open"></i>
+            <h3>No gadgets found</h3>
+            <p>Try searching with another keyword or change category filter.</p>
+            <button class="btn btn-outline" onclick="resetFilters()">Reset Search</button>
+        </div>
+    </main>
+
+    <!-- SINGLE PRODUCT DETAIL MODAL -->
+    <div class="modal-overlay" id="productModal">
+        <div class="modal-card modal-lg">
+            <button class="modal-close" id="closeProductModal"><i class="fa-solid fa-xmark"></i></button>
+            <div class="product-detail-layout">
+                
+                <!-- Left: Gallery Image Container -->
+                <div class="detail-gallery">
+                    <div class="main-img-box">
+                        <img id="modalProductImg" src="" alt="Product Image">
+                        <span class="detail-badge" id="modalProductBadge">HOT</span>
+                    </div>
+                </div>
+
+                <!-- Right: Product Information & Ordering -->
+                <div class="detail-info">
+                    <div class="detail-category" id="modalProductCategory">POWER BANK</div>
+                    <h2 class="detail-title" id="modalProductTitle">Product Title</h2>
+                    
+                    <div class="detail-rating">
+                        <div class="stars">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <span class="rating-text">(4.9 / 5.0 Rating from 64+ Verified Nepal Customers)</span>
+                    </div>
+
+                    <div class="detail-price-row">
+                        <span class="detail-price" id="modalProductPrice">Rs. 0</span>
+                        <span class="detail-price-old" id="modalProductOldPrice">Rs. 0</span>
+                        <span class="save-tag" id="modalSaveTag">Save Rs. 0</span>
+                    </div>
+
+                    <p class="detail-description" id="modalProductDesc">
+                        Detailed product explanation...
+                    </p>
+
+                    <!-- Key Specs Checklist -->
+                    <div class="specs-container">
+                        <h4 class="specs-title"><i class="fa-solid fa-sliders"></i> Key Features & Specifications:</h4>
+                        <ul class="specs-list" id="modalProductSpecs">
+                            <!-- Injected JS specs -->
+                        </ul>
+                    </div>
+
+                    <div class="stock-status">
+                        <i class="fa-solid fa-circle-check text-success"></i> <span>In Stock at Kirtipur Store — Ready for Shipping</span>
+                    </div>
+
+                    <!-- Quantity Picker -->
+                    <div class="quantity-wrapper">
+                        <label for="modalQty">Quantity:</label>
+                        <div class="qty-control">
+                            <button class="qty-btn" id="modalQtyMinus"><i class="fa-solid fa-minus"></i></button>
+                            <input type="number" id="modalQty" value="1" min="1" max="10" readonly>
+                            <button class="qty-btn" id="modalQtyPlus"><i class="fa-solid fa-plus"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="detail-actions">
+                        <button class="btn btn-whatsapp btn-lg" id="modalDirectWaBtn">
+                            <i class="fa-brands fa-whatsapp"></i> Place Order via WhatsApp
+                        </button>
+                        <button class="btn btn-primary btn-lg" id="modalAddToCartBtn">
+                            <i class="fa-solid fa-cart-plus"></i> Add to Cart
+                        </button>
+                    </div>
+
+                    <div class="quick-notes">
+                        <span><i class="fa-solid fa-truck"></i> Delivery to Kirtipur: 2-4 Hours</span>
+                        <span><i class="fa-solid fa-phone"></i> Direct Call/WhatsApp: <strong>9749497724</strong></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CART SLIDE-OVER DRAWER -->
+    <div class="drawer-overlay" id="cartDrawer">
+        <div class="drawer-content">
+            <div class="drawer-header">
+                <h3><i class="fa-solid fa-bag-shopping"></i> Shopping Cart (<span id="cartItemCount">0</span>)</h3>
+                <button class="drawer-close" id="closeCartDrawer"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <div class="drawer-body" id="cartItemsList">
+                <!-- Cart items JS injected -->
+            </div>
+
+            <div class="drawer-footer">
+                <div class="cart-summary">
+                    <div class="summary-row">
+                        <span>Subtotal</span>
+                        <span class="summary-val" id="cartSubtotal">Rs. 0</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Delivery Charge</span>
+                        <span class="summary-val text-success">FREE (Valley)</span>
+                    </div>
+                    <div class="summary-row total-row">
+                        <span>Grand Total</span>
+                        <span class="summary-val" id="cartGrandTotal">Rs. 0</span>
+                    </div>
+                </div>
+
+                <div class="drawer-actions">
+                    <button class="btn btn-whatsapp btn-block" id="cartCheckoutWaBtn">
+                        <i class="fa-brands fa-whatsapp"></i> Order Cart via WhatsApp (+977 9749497724)
+                    </button>
+                    <button class="btn btn-outline btn-block" id="clearCartBtn">Clear Cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- QUICK CHECKOUT & ADDRESS MODAL -->
+    <div class="modal-overlay" id="checkoutModal">
+        <div class="modal-card modal-md">
+            <button class="modal-close" id="closeCheckoutModal"><i class="fa-solid fa-xmark"></i></button>
+            
+            <div class="checkout-header">
+                <div class="checkout-icon"><i class="fa-brands fa-whatsapp"></i></div>
+                <h2>Complete Your WhatsApp Order</h2>
+                <p>Fill your delivery details below to send order directly to <strong>+977 9749497724</strong></p>
+            </div>
+
+            <form id="checkoutForm" onsubmit="event.preventDefault(); sendWhatsAppOrder();">
+                <div class="form-group">
+                    <label for="custName"><i class="fa-solid fa-user"></i> Full Name *</label>
+                    <input type="text" id="custName" placeholder="e.g. Ram Shrestha" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="custPhone"><i class="fa-solid fa-phone"></i> Phone Number *</label>
+                    <input type="tel" id="custPhone" placeholder="e.g. 98XXXXXXXX" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="custAddress"><i class="fa-solid fa-location-dot"></i> Delivery Address (Location) *</label>
+                    <input type="text" id="custAddress" placeholder="e.g. Naya Bazar, Kirtipur / Balkhu, Kathmandu" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="custPayment"><i class="fa-solid fa-wallet"></i> Preferred Payment Method</label>
+                    <select id="custPayment">
+                        <option value="Cash on Delivery">Cash on Delivery (COD)</option>
+                        <option value="eSewa / Khalti Transfer">eSewa / Khalti Mobile Transfer</option>
+                        <option value="Bank Direct Transfer">Bank Direct Transfer</option>
+                    </select>
+                </div>
+
+                <div class="order-summary-box" id="checkoutOrderSummary">
+                    <!-- Order summary snippet -->
+                </div>
+
+                <button type="submit" class="btn btn-whatsapp btn-block btn-lg mt-3">
+                    <i class="fa-brands fa-whatsapp"></i> Confirm & Send Order on WhatsApp
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- FLOATING WHATSAPP BUTTON -->
+    <a href="https://wa.me/9779749497724?text=Hello%20Kirtipur%20Hub%20Nepal!%20I%20have%20a%20question%20about%20a%20gadget." 
+       target="_blank" 
+       class="floating-wa" 
+       title="Chat with us on WhatsApp 9749497724">
+        <i class="fa-brands fa-whatsapp"></i>
+        <span class="floating-tooltip">Chat with Kirtipur Hub<br><strong>9749497724</strong></span>
+    </a>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div class="footer-col brand-col">
+                <div class="brand-logo">
+                    <img src="images/logo.jpg?v=2" alt="Kirtipur Hub Nepal Logo" class="footer-logo-img">
+                    <div class="logo-text">
+                        <span class="brand-name">Kirtipur Hub <span class="highlight">Nepal</span></span>
+                        <span class="brand-slogan">Quality Products, Nepal's Pride</span>
+                    </div>
+                </div>
+                <p class="footer-desc">Your ultimate destination for authentic tech gadgets, power banks, audio gear, and smart accessories in Kirtipur & Nepal.</p>
+                <div class="footer-contact">
+                    <p><i class="fa-solid fa-phone"></i> <strong>Call / WhatsApp:</strong> +977 9749497724</p>
+                    <p><i class="fa-solid fa-location-dot"></i> <strong>Location:</strong> Kirtipur, Kathmandu, Nepal</p>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h4 class="footer-title">Categories</h4>
+                <ul class="footer-links">
+                    <li><a href="#productsSection" onclick="filterByCategory('powerbanks')">Power Banks (MY POWER & More)</a></li>
+                    <li><a href="#productsSection" onclick="filterByCategory('audio')">Wireless TWS Earbuds (Ultima)</a></li>
+                    <li><a href="#productsSection" onclick="filterByCategory('wearables')">Smartwatches & Fitness</a></li>
+                    <li><a href="#productsSection" onclick="filterByCategory('chargers')">Fast Chargers & GaN Plugs</a></li>
+                    <li><a href="#productsSection" onclick="filterByCategory('gaming')">Gaming Gear & Headphones</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4 class="footer-title">Customer Care</h4>
+                <ul class="footer-links">
+                    <li><a href="https://wa.me/9779749497724" target="_blank"><i class="fa-brands fa-whatsapp"></i> Direct WhatsApp Order</a></li>
+                    <li><a href="#productsSection">Track Order via WhatsApp</a></li>
+                    <li><a href="#">Warranty & Guarantee Policy</a></li>
+                    <li><a href="#">Delivery Rates in Nepal</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4 class="footer-title">Direct Order Line</h4>
+                <p class="wa-footer-box">
+                    <i class="fa-brands fa-whatsapp text-whatsapp text-2xl"></i>
+                    <span>Official Order Number:<br><strong class="text-accent text-lg">+977 9749497724</strong></span>
+                </p>
+                <a href="https://wa.me/9779749497724" target="_blank" class="btn btn-whatsapp btn-sm btn-block mt-2">
+                    <i class="fa-brands fa-whatsapp"></i> Chat Now
+                </a>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="container footer-bottom-content">
+                <p>&copy; 2026 <strong>Kirtipur Hub Nepal</strong>. All Rights Reserved. Designed for Nepal Tech Lovers.</p>
+                <div class="payment-badges">
+                    <span><i class="fa-solid fa-shield-check"></i> 100% Original</span>
+                    <span><i class="fa-solid fa-truck"></i> Fast Express Shipping</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notification Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="app.js?v=2"></script>
+</body>
+</html>
